@@ -1,34 +1,4 @@
-interface SignalData {
-	type: 'LOCATION' | 'TRANSACTION' | 'CONSUMER_GRAPH';
-	top_category?: string;
-	sub_category?: string;
-	level1?: string;
-	level2?: string | null;
-	level3?: string | null;
-	level4?: string | null;
-	field?: string;
-	fieldType?: 'BOOL' | 'INT' | 'ALPHA' | 'ALPHA_NUM';
-	value?: string | boolean;
-	values?: string[];
-	range?: { min: number; max: number };
-}
-
-interface Signal {
-	id: string;
-	type: 'LOCATION' | 'TRANSACTION' | 'CONSUMER_GRAPH';
-	data: SignalData;
-	label: string;
-	confidence: number;
-}
-
-interface MergedSignal extends Signal {
-	_mergedSize?: number;
-}
-
-export interface EstimateResult {
-	low: number;
-	high: number;
-}
+import { SignalData, Signal, MergedSignal, EstimateResult } from "../types/types.js";
 
 const BASE_POPULATION = 250_000_000;
 const GLOBAL_FLOOR = 10_000;

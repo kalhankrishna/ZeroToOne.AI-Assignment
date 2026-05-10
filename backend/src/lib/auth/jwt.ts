@@ -1,11 +1,6 @@
 import jwt from 'jsonwebtoken';
 import type { CookieOptions } from 'express';
-import type { Role } from '../../generated/prisma/client.js';
-
-export interface JWTPayload {
-	userId: string;
-	role: Role;
-}
+import { JWTPayload } from '../types/types.js';
 
 const SECRET = process.env.JWT_SECRET!;
 const EXPIRES_IN = '24h';

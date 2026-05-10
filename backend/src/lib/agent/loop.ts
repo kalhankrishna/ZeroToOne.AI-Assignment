@@ -12,25 +12,7 @@ import {
 	toolEstimateAudience,
 } from './toolHandlers.js';
 
-export interface AgentContext {
-	conversationId: string;
-	userMessage: string;
-	history: { role: 'user' | 'assistant'; content: string }[];
-	signals: {
-		id: string;
-		type: string;
-		label: string;
-		confidence: number;
-		data: unknown;
-	}[];
-	status: 'BUILDING' | 'CONFIRMED' | 'SIZED';
-}
-
-export interface AgentResult {
-	assistantMessage: string;
-	toolCallsMade: string[];
-	estimateCalled: boolean;
-}
+import { AgentContext, AgentResult } from '../types/types.js';
 
 function buildStateInjection(ctx: AgentContext): string {
 	const signalList = ctx.signals.map((s) => ({

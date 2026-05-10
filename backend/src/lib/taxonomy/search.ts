@@ -1,34 +1,7 @@
 import { prisma } from '../prisma.js';
 import pgvector from 'pgvector';
 import { pool } from '../pgClient.js';
-
-export type SourceType = 'LOCATION' | 'TRANSACTION' | 'CG';
-
-export interface SearchResult {
-	label: string;
-	score: number;
-	zone: 'high' | 'medium' | 'low';
-	field?: string;
-	fieldType?: 'BOOL' | 'INT' | 'ALPHA' | 'ALPHA_NUM';
-	fieldRangeMin?: number | null;
-	fieldRangeMax?: number | null;
-	decodedValues?: { value: string; label: string }[];
-	top_category?: string;
-	sub_category?: string;
-	level1?: string;
-	level2?: string | null;
-	level3?: string | null;
-	level4?: string | null;
-}
-
-export interface ToolSearchResult {
-	query: string;
-	sourceType: string;
-	results: SearchResult[];
-	best_score: number;
-	direct_match: boolean;
-	hint?: string;
-}
+import { SourceType, SearchResult, ToolSearchResult } from '../types/types.js';
 
 export async function embedQuery(query: string): Promise<number[]> {
 	const response = await fetch('https://api.voyageai.com/v1/embeddings', {
