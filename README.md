@@ -66,6 +66,8 @@ pnpm prisma migrate deploy
 
 pnpm exec tsx prisma/setup-indexes.ts
 
+pnpm prisma generate
+
 pnpm seed
 
 pnpm build
