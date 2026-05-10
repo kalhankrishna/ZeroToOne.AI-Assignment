@@ -59,11 +59,17 @@ This starts a PostgreSQL instance with the pgvector extension enabled.
 ### 4. Backend setup
 
 cd backend
+
 pnpm install
+
 pnpm prisma migrate deploy
+
 pnpm exec tsx prisma/setup-indexes.ts
+
 pnpm seed
+
 pnpm build
+
 pnpm start
 
 For local development instead of the last two steps:
