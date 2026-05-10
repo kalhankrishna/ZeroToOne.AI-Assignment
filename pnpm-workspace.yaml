@@ -1,0 +1,12 @@
+packages:
+  - backend
+  - frontend
+
+forceLegacyDeploy: true
+
+ignoredBuiltDependencies:
+  - esbuild
+
+onlyBuiltDependencies:
+  - '@prisma/engines'
+  - prisma

@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg18
+    container_name: zerotoone-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: zerotoone
+      POSTGRES_PASSWORD: zerotoone123
+      POSTGRES_DB: zerotoone-db
+      PGDATA: /var/lib/postgresql/18/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zerotoone -d zerotoone-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:

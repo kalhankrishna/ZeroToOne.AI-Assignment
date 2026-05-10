@@ -1,0 +1,98 @@
+### ─── Variables ────────────────────────────────────────────────────────────
+@base = http://localhost:3000
+
+### ─── 1. Login (get auth cookie) ──────────────────────────────────────────
+# @name login
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "planner@demo.com",
+  "password": "planner123"
+}
+
+### ─── 2. Create a new conversation ────────────────────────────────────────
+# @name createConvo
+POST {{base}}/conversations
+Content-Type: application/json
+Cookie: {{login.response.headers.set-cookie}}
+
+{
+  "title": "Fitness Enthusiasts Campaign"
+}
+
+### ─── 3. Send first message — describe the audience ───────────────────────
+# @name turn1
+POST {{base}}/conversations/{{createConvo.response.body.id}}/messages
+Content-Type: application/json
+Cookie: {{login.response.headers.set-cookie}}
+
+{
+  "content": "I want to target fitness enthusiasts aged 25-45 who visit gyms and spend money on health supplements."
+}
+
+### ─── 4. Follow-up — respond to agent's options ──────────────────────────
+# @name turn2
+POST {{base}}/conversations/{{createConvo.response.body.id}}/messages
+Content-Type: application/json
+Cookie: {{login.response.headers.set-cookie}}
+
+{
+  "content": "Go with Interested in Fitness and adults aged 25034 and 35-44. Also add in Mineral supplements."
+}
+
+### ─── 5. Confirm signals ─────────────────────────────────────────────────
+# @name turn3
+POST {{base}}/conversations/{{createConvo.response.body.id}}/messages
+Content-Type: application/json
+Cookie: {{login.response.headers.set-cookie}}
+
+{
+  "content": "Looks good, confirm those signals."
+}
+
+### ─── 6. Request estimate ────────────────────────────────────────────────
+# @name turn4
+POST {{base}}/conversations/{{createConvo.response.body.id}}/messages
+Content-Type: application/json
+Cookie: {{login.response.headers.set-cookie}}
+
+{
+  "content": "Yes, how many people can we reach?"
+}
+
+### ─── 7. Get full conversation (verify persistence) ──────────────────────
+GET {{base}}/conversations/{{createConvo.response.body.id}}
+Cookie: {{login.response.headers.set-cookie}}
+
+### ─── 8. List all conversations ──────────────────────────────────────────
+GET {{base}}/conversations
+Cookie: {{login.response.headers.set-cookie}}
+
+### ─── 9. Verify SIZED rejection ──────────────────────────────────────────
+# Should return 400 — audience already sized
+POST {{base}}/conversations/{{createConvo.response.body.id}}/messages
+Content-Type: application/json
+Cookie: {{login.response.headers.set-cookie}}
+
+{
+  "content": "Add more signals please"
+}
+
+### ─── 10. Delete conversation ────────────────────────────────────────────
+DELETE {{base}}/conversations/{{createConvo.response.body.id}}
+Cookie: {{login.response.headers.set-cookie}}
+
+### ─── Admin: list all conversations ──────────────────────────────────────
+# @name adminLogin
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@demo.com",
+  "password": "admin123"
+}
+
+###
+GET {{base}}/conversations
+Cookie: {{adminLogin.response.headers.set-cookie}}

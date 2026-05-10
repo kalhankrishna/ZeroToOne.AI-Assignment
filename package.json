@@ -1,0 +1,14 @@
+{
+  "name": "ZeroToOne_Assignment",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel -r run dev",
+    "build": "pnpm -r run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.30.0"
+}
