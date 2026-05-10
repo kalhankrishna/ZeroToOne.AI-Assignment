@@ -12,6 +12,8 @@ import { conversationsRouter } from './routes/conversations.js';
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
+app.set('trust proxy', 1);
+
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000,
 	max: 100,
